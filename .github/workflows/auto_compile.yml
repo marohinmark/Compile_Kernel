@@ -1,11 +1,9 @@
 
-
-name: Compile Android
+name: BUILD v8
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
     
 jobs:
   Compile:
