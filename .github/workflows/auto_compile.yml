@@ -7,8 +7,8 @@ on:
     
 jobs:
   Compile:
-    name:Compile Android
-    runs-on:ubuntu-latest
+    name: Compile Android
+    runs-on: ubuntu-latest
     steps:
     - name: Ready For Project
       run: |
