@@ -37,6 +37,7 @@ jobs:
         wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip
         unzip ./20210522.zip
         chmod -R 777 ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/
+        
     - name: Clone Kernel Code
       run: |
         git clone ${{ github.event.inputs.KERNEL_URL }}
@@ -46,6 +47,7 @@ jobs:
         cd ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
         export ARCH=${{ github.event.inputs.ARCHOSUB }}
         export SUBARCH=${{ github.event.inputs.ARCHOSUB }}
+        export PATH="${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin:$PATH"
         make O=out ${{ github.event.inputs.USEDEFCONFIG }}
         make -j32 O=out \
         ARCH=${{ github.event.inputs.ARCHOSUB }} \
