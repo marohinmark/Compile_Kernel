@@ -1,4 +1,4 @@
-name: "Use action to compile android kernel"
+name: "Compile Android Kernel"
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ on:
         default: 'arm64'
       TOOLCHAIN_DIR:
         description: 'TOOLCHAIN_DIR'
-        required: false
+        required: true
         default: 'proton-clang-20210522'
       USEDEFCONFIG:
         description: 'USEDEFCONFIG'
@@ -36,6 +36,7 @@ jobs:
         sudo apt install -y openssl make python libssh-dev unzip git wget build-essential zip bc wget unzip p7zip-full git
         wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip
         unzip ./20210522.zip
+        chmod -R 777 ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/
     - name: Clone Kernel Code
       run: |
         git clone ${{ github.event.inputs.KERNEL_URL }}
