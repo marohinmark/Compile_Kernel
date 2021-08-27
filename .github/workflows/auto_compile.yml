@@ -27,7 +27,7 @@ on:
 jobs:
   ready_compile_env:
     name: Compile kernel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - name: Ready Compile
       run: |
@@ -54,7 +54,10 @@ jobs:
         export CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang
         
         make O=out ${{ github.event.inputs.USEDEFCONFIG }}
-        make -j32 O=out
+        make -j32 O=out \
+        CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang \
+        CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu- \
+        CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         
     - name: 上传至Release...
       uses: ncipollo/release-action@v1.8.0
