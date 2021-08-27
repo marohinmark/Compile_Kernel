@@ -1,6 +1,28 @@
 name: "Use action to compile android kernel"
 
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      KERNEL_URL:
+        description: 'KERNEL_URL'
+        required: true
+        default: 'https://github.com/PPKunOffical/android_kernel_xiaomi_sdm845.git'
+      KERNEL_DIR:
+        description: 'KERNEL_DIR'
+        required: true
+        default: 'android_kernel_xiaomi_sdm845'
+      ARCHOSUB:
+        description: 'ARCH/SUBARCH'
+        required: true
+        default: 'arm64'
+      TOOLCHAIN_DIR:
+        description: 'TOOLCHAIN_DIR'
+        required: false
+        default: 'proton-clang-20210522'
+      USEDEFCONFIG:
+        description: 'USEDEFCONFIG'
+        required: true
+        default: 'dipper_defconfig'
 
 jobs:
   ready_compile_env:
@@ -16,6 +38,22 @@ jobs:
         unzip ./20210522.zip
     - name: Clone Kernel Code
       run: |
-        git clone https://github.com/LineageOS/android_kernel_xiaomi_sdm845.git
-        ls
+        git clone ${{ github.event.inputs.KERNEL_URL }}
+
+    - name: Compile Kernel
+      run: |
+        cd ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
+        export ARCH=${{ github.event.inputs.ARCHOSUB }}
+        export SUBARCH=${{ github.event.inputs.ARCHOSUB }}
+        make O=out ${{ github.event.inputs.ARCHOSUB }}
+        make -j32 O=out ARCH=${{ github.event.inputs.ARCHOSUB }} SUBARCH=${{ github.event.inputs.ARCHOSUB }} \
+        CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu- CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
+        
+        
+      
+    - name: 上传至Release...
+      uses: ncipollo/release-action@v1.8.0
+      with:
+        artifacts: "${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/arch/arm64/boot/image.gz-dtb"
+        token: ${{ secrets.GITHUB_TOKEN }}
     
