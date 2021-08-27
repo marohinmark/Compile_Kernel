@@ -1,31 +1,21 @@
+name: "Use action to compile android kernel"
 
-name: BUILD v8
+on: push
 
-on:
-  push:
-    branches: [ master ]
-    
 jobs:
-  Compile:
-    name: Compile Android
+  ready_compile_env:
+    name: Compile kernel
     runs-on: ubuntu-latest
     steps:
-    - name: Ready For Project
+    - name: Ready Compile
       run: |
         sudo apt update
         sudo apt upgrade
-        sudo apt install python
-        sudo apt install python3
-        sudo apt install python-pip
-        sudo apt install python3-pip
-        sudo apt install git
-        sudo apt install repo
-    - name: Repo Code
+        sudo apt install -y openssl make python libssh-dev unzip git wget build-essential zip bc wget unzip p7zip-full git
+        wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip
+        unzip ./20210522.zip
+    - name: find_location_file
       run: |
-        mkdir Android_code
-        cd Android_code
-        repo init -u https://github.com/exthmui/android.git -b exthm-11
-        repo sync
-    - name: test
-      run: |
+        cd ~
         ls
+    
