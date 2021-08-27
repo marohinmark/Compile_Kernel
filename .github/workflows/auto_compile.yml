@@ -14,8 +14,8 @@ jobs:
         sudo apt install -y openssl make python libssh-dev unzip git wget build-essential zip bc wget unzip p7zip-full git
         wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip
         unzip ./20210522.zip
-    - name: find_location_file
+    - name: Clone Kernel Code
       run: |
-        pwd
+        git clone https://github.com/LineageOS/android_kernel_xiaomi_sdm845.git
         ls
     
