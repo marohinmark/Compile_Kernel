@@ -16,6 +16,6 @@ jobs:
         unzip ./20210522.zip
     - name: find_location_file
       run: |
-        cd ~
+        pwd
         ls
     
