@@ -34,8 +34,8 @@ jobs:
         sudo apt update
         sudo apt upgrade
         sudo apt install -y openssl make python libssh-dev unzip git wget build-essential zip bc wget unzip p7zip-full git
-        wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip
-        unzip ./20210522.zip
+        wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip -q
+        unzip ./20210522.zip -q
         chmod -R 777 ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/
         
     - name: Clone Kernel Code
