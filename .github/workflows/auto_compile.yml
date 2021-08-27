@@ -46,7 +46,12 @@ jobs:
         export ARCH=${{ github.event.inputs.ARCHOSUB }}
         export SUBARCH=${{ github.event.inputs.ARCHOSUB }}
         make O=out ${{ github.event.inputs.USEDEFCONFIG }}
-        make -j32 O=out ARCH=${{ github.event.inputs.ARCHOSUB }} SUBARCH=${{ github.event.inputs.ARCHOSUB }} CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu- CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
+        make -j32 O=out \
+        ARCH=${{ github.event.inputs.ARCHOSUB }} \
+        SUBARCH=${{ github.event.inputs.ARCHOSUB }} \
+        CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang \
+        CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu- \
+        CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         
     - name: 上传至Release...
       uses: ncipollo/release-action@v1.8.0
