@@ -27,7 +27,7 @@ on:
 jobs:
   ready_compile_env:
     name: Compile kernel
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
     - name: Ready Compile
       run: |
