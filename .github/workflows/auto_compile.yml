@@ -36,6 +36,7 @@ jobs:
     - name: Ready Compile
       uses: kdrag0n/proton-clang
       run: |
+        ls
         sudo apt update
         sudo apt upgrade
         sudo apt install -y openssl make python libssh-dev unzip git wget build-essential zip bc wget unzip p7zip-full git
