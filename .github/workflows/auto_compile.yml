@@ -6,11 +6,15 @@ on:
       KERNEL_URL:
         description: 'KERNEL_URL'
         required: true
-        default: 'https://github.com/dotOS-Devices/android_kernel_xiaomi_dipper.git'
+        default: 'https://github.com/ZonaRMR/BAALAM_android_kernel_xiaomi_sdm845.git'
       KERNEL_DIR:
         description: 'KERNEL_DIR'
         required: true
-        default: 'android_kernel_xiaomi_dipper'
+        default: 'BAALAM_android_kernel_xiaomi_sdm845'
+      RELEASE_REPO:
+        description: 'RELEASE_REPO'
+        required: true
+        default: 'ZonaRMR/BAALAM_android_kernel_xiaomi_sdm845'
       ARCHOSUB:
         description: 'ARCH/SUBARCH'
         required: true
@@ -64,8 +68,8 @@ jobs:
     - name: Creat Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: v${{ github.run_number }}
-        body: Release v${{ github.run_number }}
+        tag_name: ${{ github.event.inputs.KERNEL_DIR }} Compile on Action
+        body: Release ${{ github.event.inputs.KERNEL_DIR }}
         files: |
           ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb
     
