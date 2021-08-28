@@ -11,6 +11,10 @@ on:
         description: 'KERNEL_DIR'
         required: true
         default: 'BAALAM_android_kernel_xiaomi_sdm845'
+      KERNELBRANCH:
+        description: 'KERNEL_BRANCHES'
+        required: true
+        default: 'lineage-18.1'
       ARCHOSUB:
         description: 'ARCH/SUBARCH'
         required: true
@@ -40,7 +44,7 @@ jobs:
         
     - name: Clone Kernel Code
       run: |
-        git clone ${{ github.event.inputs.KERNEL_URL }}
+        git clone ${{ github.event.inputs.KERNEL_URL }} -b ${{ github.event.inputs.KERNEL_BRANCHES }}
 
     - name: Compile Kernel
       run: |
