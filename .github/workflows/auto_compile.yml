@@ -64,7 +64,7 @@ jobs:
     - name: Creat Release
       uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ github.event.inputs.KERNEL_DIR }} Compile on Action
+        tag_name: Auto_Compile
         body: Release ${{ github.event.inputs.KERNEL_DIR }}
         files: |
           ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb
