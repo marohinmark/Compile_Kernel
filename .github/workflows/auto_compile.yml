@@ -67,5 +67,5 @@ jobs:
         tag_name: v${{ github.run_number }}
         body: Release v${{ github.run_number }}
         files: |
-          ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/image.gz-dtb
+          ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb
     
