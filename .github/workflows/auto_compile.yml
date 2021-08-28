@@ -13,7 +13,7 @@ on:
         default: 'BAALAM_android_kernel_xiaomi_sdm845'
       CLONE_ARG:
         description: 'CLONE_ARGUMENT'
-        required: true
+        required: false
         default: '-b lineage-18.1'
       ARCHOSUB:
         description: 'ARCH/SUBARCH'
