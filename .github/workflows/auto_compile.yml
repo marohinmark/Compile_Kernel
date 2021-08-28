@@ -6,11 +6,11 @@ on:
       KERNEL_URL:
         description: 'KERNEL_URL'
         required: true
-        default: 'https://github.com/PPKunOfficial/android_kernel_xiaomi_sdm845.git'
+        default: 'https://github.com/dotOS-Devices/android_kernel_xiaomi_dipper.git'
       KERNEL_DIR:
         description: 'KERNEL_DIR'
         required: true
-        default: 'android_kernel_xiaomi_sdm845'
+        default: 'android_kernel_xiaomi_dipper'
       ARCHOSUB:
         description: 'ARCH/SUBARCH'
         required: true
@@ -62,11 +62,10 @@ jobs:
         CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         
     - name: Creat Release
-      uses: ncipollo/release-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v1
       with:
-        body: ${{ github.event.inputs.KERNEL_DIR }}
-        artifacts: "${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/arch/arm64/boot/image.gz-dtb"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        tag_name: v${{ github.run_number }}
+        body: Release v${{ github.run_number }}
+        files: |
+          ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/arch/arm64/boot/image.gz-dtb
     
