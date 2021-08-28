@@ -61,9 +61,12 @@ jobs:
         CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu- \
         CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         
-    - name: 上传至Release...
-      uses: ncipollo/release-action@v1.8.0
+    - name: Creat Release
+      uses: ncipollo/release-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
+        body: ${{ github.event.inputs.KERNEL_DIR }}
         artifacts: "${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/arch/arm64/boot/image.gz-dtb"
         token: ${{ secrets.GITHUB_TOKEN }}
     
