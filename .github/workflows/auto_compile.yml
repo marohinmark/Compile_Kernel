@@ -54,7 +54,7 @@ jobs:
         export PATH="${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin:$PATH"
         
         make O=out ${{ github.event.inputs.USEDEFCONFIG }}
-        make -j32 O=out \
+        make -j128 O=out \
         ARCH=${{ github.event.inputs.ARCHOSUB }} \
         SUBARCH=${{ github.event.inputs.ARCHOSUB }} \
         CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang \
