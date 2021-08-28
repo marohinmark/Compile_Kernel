@@ -70,6 +70,7 @@ jobs:
       with:
         tag_name: ${{ github.event.inputs.KERNEL_DIR }} Compile on Action
         body: Release ${{ github.event.inputs.KERNEL_DIR }}
+        repository: ${{ github.event.inputs.RELEASE_REPO }}
         files: |
           ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb
     
