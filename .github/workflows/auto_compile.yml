@@ -6,7 +6,7 @@ on:
       KERNEL_URL:
         description: 'KERNEL_URL'
         required: true
-        default: 'https://github.com/ZonaRMR/BAALAM_android_kernel_xiaomi_sdm845.git'
+        default: 'https://github.com/PPKunOfficial/BAALAM_android_kernel_xiaomi_sdm845.git'
       KERNEL_DIR:
         description: 'KERNEL_DIR'
         required: true
