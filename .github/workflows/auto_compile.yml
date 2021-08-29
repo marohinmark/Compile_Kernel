@@ -77,6 +77,6 @@ jobs:
       run: |
         sudo apt install curl
         curl -sL https://git.io/file-transfer | sh 
-        ./transfer arp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb
-        ./transfer gof ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb
         curl --upload-file ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb https://transfer.sh/Image.gz-dtb
+        ./transfer arp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
+        ./transfer gof ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
