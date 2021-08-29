@@ -65,6 +65,16 @@ jobs:
         CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu- \
         CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         
+    - name: Package into zip
+      run: |
+        git clone https://github.com/PPKunOfficial/Compile_Kernel.git
+        cd Compile_Kernel
+        unzip Kernel_template.zip
+        cd Kernel_template
+        cp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb ./
+        cd ${{ github.workspace }}
+        zip -q -r -D ${{ github.workspace }}/Kernel.zip ${{ github.workspace }}/Compile_Kernel/Kernel_template
+        
     - name: Creat Release
       uses: softprops/action-gh-release@v1
       with:
@@ -72,11 +82,12 @@ jobs:
         body: Release ${{ github.event.inputs.KERNEL_DIR }}
         files: |
           ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb
+          ${{ github.workspace }}/Kernel.zip
     
     - name: Upload to Cloud
       run: |
         sudo apt install curl
         curl -sL https://git.io/file-transfer | sh 
-        curl --upload-file ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb https://transfer.sh/Image.gz-dtb
-        ./transfer arp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
-        ./transfer cow ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
+        curl --upload-file ${{ github.workspace }}/Kernel.zip https://transfer.sh/Kernel.zip
+        ./transfer arp ${{ github.workspace }}/Kernel.zip --silent
+        ./transfer cow ${{ github.workspace }}/Kernel.zip --silent
