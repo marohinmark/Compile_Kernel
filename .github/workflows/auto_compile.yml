@@ -68,10 +68,10 @@ jobs:
     - name: Package into zip
       run: |
         git clone https://github.com/PPKunOfficial/Compile_Kernel.git
-        cd Compile_Kernel
+        cd ${{ github.workspace }}/Compile_Kernel/
         unzip Kernel_template.zip
-        cd Kernel_template
-        cp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb ./
+        cd ${{ github.workspace }}/Compile_Kernel/Kernel_template/
+        cp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb ${{ github.workspace }}/Compile_Kernel/Kernel_template
         cd ${{ github.workspace }}
         zip -q -r -D ${{ github.workspace }}/Kernel.zip ${{ github.workspace }}/Compile_Kernel/Kernel_template
         
