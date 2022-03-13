@@ -22,7 +22,7 @@ on:
       TOOLCHAIN_DIR:
         description: 'TOOLCHAIN_DIR'
         required: true
-        default: 'master/clang-stable'
+        default: 'proton-clang-20210522'
       USEDEFCONFIG:
         description: 'USEDEFCONFIG'
         required: true
@@ -37,30 +37,14 @@ jobs:
       run: |
         sudo apt upgrade
         sudo apt update
-
-        sudo apt-get install \
-        git ccache automake flex lzop bison \
-        gperf build-essential zip curl\
-        zlib1g-dev zlib1g-dev:i386 \
-        g++-multilib python-networkx \
-        libxml2-utils bzip2 libbz2-dev \
-        libbz2-1.0 libghc-bzlib-dev \
-        squashfs-tools pngcrush \
-        schedtool dpkg-dev liblz4-tool \
-        make optipng maven libssl-dev \
-        pwgen libswitch-perl policycoreutils \
-        minicom libxml-sax-base-perl \
-        libxml-simple-perl bc \
-        libc6-dev-i386 lib32ncurses5-dev \
-        x11proto-core-dev libx11-dev \
-        lib32z-dev libgl1-mesa-dev xsltproc unzip
+        sudo apt install -y openssl make python libssh-dev unzip git wget build-essential zip bc wget unzip p7zip-full git
+        wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip
+        unzip ./20210522.zip
+        chmod -R 777 ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/
         
-    - name: Clone Source
+    - name: Clone Kernel Code
       run: |
         git clone ${{ github.event.inputs.KERNEL_URL }} ${{ github.event.inputs.CLONE_ARG }}
-
-        git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86
-        ls
 
     - name: Compile Kernel
       run: |
@@ -73,13 +57,13 @@ jobs:
         export CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         PATH="${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin:$PATH"
         
-        make O=out ${{ github.event.inputs.USEDEFCONFIG }}
+        make O=out ARCH=${{ github.event.inputs.ARCHOSUB }} ${{ github.event.inputs.USEDEFCONFIG }}
         make -j128 O=out \
         ARCH=${{ github.event.inputs.ARCHOSUB }} \
         SUBARCH=${{ github.event.inputs.ARCHOSUB }} \
-        CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang \
-        CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu- \
-        CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
+        CC=clang \
+        CROSS_COMPILE=aarch64-linux-gnu-
+      # CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         
     - name: Creat Release
       uses: softprops/action-gh-release@v1
@@ -93,6 +77,6 @@ jobs:
       run: |
         sudo apt install curl
         curl -sL https://git.io/file-transfer | sh 
-        curl --upload-file ${{ github.workspace }}/Kernel.zip https://transfer.sh/Kernel.zip
+        curl --upload-file ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb https://transfer.sh/Image.gz-dtb
         ./transfer arp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
         ./transfer cow ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
