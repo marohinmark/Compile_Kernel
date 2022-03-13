@@ -54,16 +54,16 @@ jobs:
         export SUBARCH=${{ github.event.inputs.ARCHOSUB }}
         export CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang
         export CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu-
-        export CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
+        export CROSS_COMPILE_COMPAT=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         PATH="${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin:$PATH"
         
-        make O=out ARCH=${{ github.event.inputs.ARCHOSUB }} ${{ github.event.inputs.USEDEFCONFIG }}
+        make O=out ${{ github.event.inputs.USEDEFCONFIG }}
         make -j128 O=out \
         ARCH=${{ github.event.inputs.ARCHOSUB }} \
         SUBARCH=${{ github.event.inputs.ARCHOSUB }} \
         CC=clang \
         CROSS_COMPILE=aarch64-linux-gnu-
-      # CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
+        CROSS_COMPILE_COMPAT=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         
     - name: Creat Release
       uses: softprops/action-gh-release@v1
@@ -78,5 +78,4 @@ jobs:
         sudo apt install curl
         curl -sL https://git.io/file-transfer | sh 
         curl --upload-file ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb https://transfer.sh/Image.gz-dtb
-        ./transfer arp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
-        ./transfer cow ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
+        ./transfer cat ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
