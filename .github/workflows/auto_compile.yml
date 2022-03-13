@@ -60,6 +60,7 @@ jobs:
         git clone ${{ github.event.inputs.KERNEL_URL }} ${{ github.event.inputs.CLONE_ARG }}
 
         git clone https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86
+        ls
 
     - name: Compile Kernel
       run: |
