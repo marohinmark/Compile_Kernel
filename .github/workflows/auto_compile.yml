@@ -29,8 +29,8 @@ on:
         default: 'dipper_defconfig'
       COMPILE_SET:
         description: 'COMPILE_SET'
-        required: true
-        default: '-flto=thin -O3'
+        required: false
+        default: ''
 
 jobs:
   ready_compile_env:
