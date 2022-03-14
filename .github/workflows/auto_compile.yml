@@ -27,6 +27,10 @@ on:
         description: 'USEDEFCONFIG'
         required: true
         default: 'dipper_defconfig'
+      COMPILE_SET:
+        description: 'COMPILE_SET'
+        required: true
+        default: '-flto=thin -O3'
 
 jobs:
   ready_compile_env:
@@ -57,7 +61,8 @@ jobs:
         export CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
         PATH="${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin:$PATH"
         
-        make O=out ${{ github.event.inputs.USEDEFCONFIG }}
+        make O=out ${{ github.event.inputs.USEDEFCONFIG }} \
+        ${{ github.event.inputs.COMPILE_SET }}
         make -j128 O=out \
         ARCH=${{ github.event.inputs.ARCHOSUB }} \
         SUBARCH=${{ github.event.inputs.ARCHOSUB }} \
