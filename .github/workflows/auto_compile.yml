@@ -69,18 +69,10 @@ jobs:
         CC=clang \
         CROSS_COMPILE=aarch64-linux-gnu- \
         CROSS_COMPILE_ARM32=arm-linux-gnueabi-
-        
-    - name: Creat Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: Auto_Compile
-        body: Release ${{ github.event.inputs.KERNEL_DIR }}
-        files: |
-          ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb
     
     - name: Upload to Cloud
       run: |
         sudo apt install curl
         curl -sL https://git.io/file-transfer | sh 
-        curl --upload-file ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb https://transfer.sh/Image.gz-dtb
+       
         ./transfer arp ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}/out/arch/arm64/boot/Image.gz-dtb --silent
