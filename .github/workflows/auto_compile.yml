@@ -63,7 +63,7 @@ jobs:
         
         make O=out ${{ github.event.inputs.USEDEFCONFIG }} \
         ${{ github.event.inputs.COMPILE_SET }}
-        make -j128 O=out \
+        make -j32 O=out \
         ARCH=${{ github.event.inputs.ARCHOSUB }} \
         SUBARCH=${{ github.event.inputs.ARCHOSUB }} \
         CC=clang \
