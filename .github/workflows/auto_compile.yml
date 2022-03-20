@@ -14,7 +14,7 @@ on:
       CLONE_ARG:
         description: 'CLONE_ARGUMENT'
         required: false
-        default: '-b lineage-18.1'
+        default: '-b rebase-R'
       ARCHOSUB:
         description: 'ARCH/SUBARCH'
         required: true
