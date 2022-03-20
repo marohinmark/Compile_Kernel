@@ -75,9 +75,7 @@ jobs:
         CACHE_HIT: ${{steps.cacheClang.outputs.cache-hit}} 
       run: |
         cd ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
-        if [[ "$CACHE_HIT" == 'true' ]]; then
-          git pull 
-        fi
+        git pull 
         export ARCH=${{ github.event.inputs.ARCHOSUB }}
         export AR=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-ar
         export NM=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-nm
