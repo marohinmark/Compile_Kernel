@@ -22,7 +22,7 @@ on:
       TOOLCHAIN_DIR:
         description: 'TOOLCHAIN_DIR'
         required: true
-        default: 'proton-clang'
+        default: 'proton-clang-20210522'
       USEDEFCONFIG:
         description: 'USEDEFCONFIG'
         required: true
@@ -57,7 +57,8 @@ jobs:
     - name: Clone Clang
       if: steps.cacheClang.outputs.cache-hit != 'true'
       run:
-        git clone https://github.com/kdrag0n/proton-clang.git
+        wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip
+        unzip ./20210522.zip
 
     - name: Clone Kernel Code
       run: |
