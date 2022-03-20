@@ -57,7 +57,7 @@ jobs:
       with:
         path: |
           ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
-        key: ${{ runner.os }}-${{ github.event.inputs.KERNEL_DIR }}/${{ github.event.inputs.CLONE_ARGUMENT }}-${{ github.event.inputs.FRESH_CACHE }}
+        key: ${{ runner.os }}-${{ github.event.inputs.KERNEL_DIR }}-${{ github.event.inputs.FRESH_CACHE }}
 
     - name: Ready Compile
       run: |
