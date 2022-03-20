@@ -31,6 +31,10 @@ on:
         description: 'COMPILE_SET'
         required: false
         default: ''
+      FRESH_CACHE:
+        description: 'FRESH_CACHE'
+        required: true
+        default: '0'
 
 env:
   CLANG_VER: '20210522-proton'
@@ -44,8 +48,10 @@ jobs:
       id: cacheClang
       uses: actions/cache@v2
       with:
-        path: ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}
-        key: ${{ runner.os }}-${{ github.event.inputs.TOOLCHAIN_DIR }}/${{ env.CLANG_VER }}
+        path: |
+          ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}
+          ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
+        key: ${{ runner.os }}-${{ github.event.inputs.TOOLCHAIN_DIR }}/${{ env.CLANG_VER }}-FRESH_CACHE
 
     - name: Ready Compile
       run: |
