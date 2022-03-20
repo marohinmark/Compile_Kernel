@@ -52,7 +52,7 @@ jobs:
     - name: Ready Compile
       run: |
         sudo apt update -y
-        sudo apt install -y git wget unzip p7zip-full git ccache
+        sudo apt install -y git wget unzip p7zip-full git
 
     - name: Clone Clang
       if: steps.cacheClang.outputs.cache-hit != 'true'
@@ -72,12 +72,10 @@ jobs:
         export USE_CCACHE=1
         export CCACHE_DIR=${{ github.workspace }}/ccache-dir
         export PATH="/usr/lib/ccache:$PATH"
-        
-        ccache -M 5G
 
-        ccache make O=out ${{ github.event.inputs.USEDEFCONFIG }}
+        make O=out ${{ github.event.inputs.USEDEFCONFIG }}
         
-        ccache make -j32 O=out \
+        make -j32 O=out \
         AR=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-ar \
         NM=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-nm \
         OBJCOPY=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objcopy \
