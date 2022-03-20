@@ -71,6 +71,11 @@ jobs:
         export USE_CCACHE=1
         export CCACHE_DIR=${{ github.workspace }}/ccache-dir
         export ARCH=${{ github.event.inputs.ARCHOSUB }}
+        export AR=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-ar
+        export NM=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-nm
+        export OBJCOPY=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objcopy
+        export OBJDUMP=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objdump
+        export STRIP=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-strip
         export SUBARCH=${{ github.event.inputs.ARCHOSUB }}
         export CC=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang
         export CROSS_COMPILE=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu-
@@ -82,11 +87,16 @@ jobs:
         make O=out ${{ github.event.inputs.USEDEFCONFIG }} \
         ${{ github.event.inputs.COMPILE_SET }} \
         make -j32 O=out \
+        AR=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-ar \
+        NM=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-nm \
+        OBJCOPY=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objcopy \
+        OBJDUMP=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objdump \
+        STRIP=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-strip \
         ARCH=${{ github.event.inputs.ARCHOSUB }} \
         SUBARCH=${{ github.event.inputs.ARCHOSUB }} \
-        CC=clang \
-        CROSS_COMPILE=aarch64-linux-gnu- \
-        CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+        CC=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang \
+        CROSS_COMPILE=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu- \
+        CROSS_COMPILE_ARM32=ccache ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
     
     - name: Upload to Cloud
       run: |
