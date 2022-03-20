@@ -44,9 +44,7 @@ jobs:
       id: cacheClang
       uses: actions/cache@v2
       with:
-        path: |
-          ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}
-          ${{ github.workspace }}/ccache-dir
+        path: ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}
         key: ${{ runner.os }}-${{ github.event.inputs.TOOLCHAIN_DIR }}/${{ env.CLANG_VER }}
 
     - name: Ready Compile
