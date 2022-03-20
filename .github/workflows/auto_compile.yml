@@ -11,6 +11,10 @@ on:
         description: 'KERNEL_DIR'
         required: true
         default: 'android_kernel_xiaomi_sdm845'
+      FRESH_CACHE:
+        description: 'FRESH_CACHE'
+        required: true
+        default: '0'
       CLONE_ARG:
         description: 'CLONE_ARGUMENT'
         required: false
@@ -31,10 +35,6 @@ on:
         description: 'COMPILE_SET'
         required: false
         default: ''
-      FRESH_CACHE:
-        description: 'FRESH_CACHE'
-        required: true
-        default: '0'
 
 env:
   CLANG_VER: '20210522-proton'
