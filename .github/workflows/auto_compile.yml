@@ -67,9 +67,17 @@ jobs:
       run: |
         cd ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
 
-        export USE_CCACHE=1
-        export CCACHE_DIR=${{ github.workspace }}/ccache-dir
-        export PATH="/usr/lib/ccache:$PATH"
+        export ARCH=${{ github.event.inputs.ARCHOSUB }}
+        export AR=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-ar
+        export NM=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-nm
+        export OBJCOPY=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objcopy
+        export OBJDUMP=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objdump
+        export STRIP=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-strip"
+        export SUBARCH=${{ github.event.inputs.ARCHOSUB }}
+        export CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang
+        export CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu-
+        export CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi-
+        export PATH="${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin:$PATH"
 
         make O=out ${{ github.event.inputs.USEDEFCONFIG }}
         
