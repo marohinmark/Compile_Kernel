@@ -52,17 +52,17 @@ jobs:
     - name: Ready Compile
       run: |
         sudo apt update && sudo apt upgrade -y
-        sudo apt install -y openssl make python libssh-dev unzip git wget build-essential zip bc wget unzip p7zip-full git ccache
+        sudo apt install -y git wget unzip p7zip-full git ccache
 
     - name: Clone Clang
       if: steps.cacheClang.outputs.cache-hit != 'true'
-      run:
-        wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip
+      run: |
+        wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip -q
         unzip ./20210522.zip
 
     - name: Clone Kernel Code
       run: |
-        chmod -R 777 ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/
+        chmod -R 777 ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}
         git clone ${{ github.event.inputs.KERNEL_URL }} ${{ github.event.inputs.CLONE_ARG }}
 
     - name: Compile Kernel
