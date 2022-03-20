@@ -34,7 +34,7 @@ on:
       FRESH_CACHE:
         description: 'FRESH_CACHE'
         required: true
-        default: '0'
+        default: 'FRESH_CACHE'
 
 env:
   CLANG_VER: '20210522-proton'
@@ -51,7 +51,7 @@ jobs:
         path: |
           ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}
           ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
-        key: ${{ runner.os }}-${{ github.event.inputs.TOOLCHAIN_DIR }}/${{ env.CLANG_VER }}-FRESH_CACHE
+        key: ${{ runner.os }}-${{ github.event.inputs.TOOLCHAIN_DIR }}/${{ env.CLANG_VER }}-${{ github.event.inputs.FRESH_CACHE }}
 
     - name: Ready Compile
       run: |
