@@ -72,7 +72,7 @@ jobs:
         export NM=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-nm
         export OBJCOPY=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objcopy
         export OBJDUMP=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objdump
-        export STRIP=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-strip"
+        export STRIP=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-strip
         export SUBARCH=${{ github.event.inputs.ARCHOSUB }}
         export CC=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/clang
         export CROSS_COMPILE=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/aarch64-linux-gnu-
