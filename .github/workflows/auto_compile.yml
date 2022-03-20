@@ -6,15 +6,15 @@ on:
       KERNEL_URL:
         description: 'KERNEL_URL'
         required: true
-        default: 'https://github.com/PPKunOfficial/pp_kernel_xiaomi_sdm845.git'
+        default: 'https://github.com/PPKunOfficial/android_kernel_xiaomi_sdm845.git'
       KERNEL_DIR:
         description: 'KERNEL_DIR'
         required: true
-        default: 'pp_kernel_xiaomi_sdm845'
+        default: 'android_kernel_xiaomi_sdm845'
       CLONE_ARG:
         description: 'CLONE_ARGUMENT'
         required: false
-        default: '-b rebase-R'
+        default: '-b lineage-18.1'
       ARCHOSUB:
         description: 'ARCH/SUBARCH'
         required: true
