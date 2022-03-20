@@ -34,7 +34,7 @@ on:
       FRESH_CACHE:
         description: 'FRESH_CACHE'
         required: true
-        default: 'FRESH_CACHE'
+        default: '0'
 
 env:
   CLANG_VER: '20210522-proton'
