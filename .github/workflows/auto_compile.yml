@@ -94,7 +94,7 @@ jobs:
 
         make O=out ${{ github.event.inputs.USEDEFCONFIG }}
         
-        make -j32 O=out \
+        make -j$(nproc --all) O=out \
         AR=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-ar \
         NM=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-nm \
         OBJCOPY=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/llvm-objcopy \
