@@ -40,7 +40,7 @@ env:
   CLANG_VER: '20210522-proton'
 
 jobs:
-  ready_compile_env:
+  compile:
     name: Compile kernel
     runs-on: ubuntu-latest
     steps:
