@@ -14,11 +14,11 @@ on:
       FRESH_CACHE:
         description: 'FRESH_CACHE'
         required: true
-        default: '1'
+        default: '2'
       CLONE_ARG:
         description: 'CLONE_ARGUMENT'
         required: false
-        default: '-b lineage-18.1'
+        default: '-b rebase-s'
       ARCHOSUB:
         description: 'ARCH/SUBARCH'
         required: true
