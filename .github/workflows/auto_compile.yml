@@ -69,7 +69,6 @@ jobs:
     - name: 编译中
       run: |
         cd ${{ github.workspace }}/${{ env.KERNEL_DIR}}
-        git pull 
         export ARCH=${{ env.ARCHOSUB}}
         export AR=${{ github.workspace }}/${{ env.CLANG_VER }}/bin/llvm-ar
         export NM=${{ github.workspace }}/${{ env.CLANG_VER }}/bin/llvm-nm
