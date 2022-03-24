@@ -21,7 +21,7 @@ on:
         default: 'dipper_defconfig'
 
 env:
-  CLANG_VER: 'proton-clang-20210522'
+  CLANG_VER: 'proton-clang'
   ARCHOSUB: 'arm64'
   KERNEL_DIR: 'kernel_source'
 
@@ -30,22 +30,6 @@ jobs:
     name: 编译内核
     runs-on: ubuntu-latest
     steps:
-    - name: 获取时间
-      id: get_time
-      run: |
-        echo "actions_time=$(date)" >> $GITHUB_ENV
-    - name: 签出仓库
-      uses: actions/checkout@v3
-      with:
-        repository: ${{ github.event.inputs.AUTHOR }}/${{ github.event.inputs.CHECKOUT_REPO }}
-        ref: ${{ github.event.inputs.CHECKOUT_BRANCH }}
-        path: ${{ env.KERNEL_DIR }}
-
-    - name: 拉取模板
-      uses: actions/checkout@v3
-      with:
-        path: Anykernel
-
     - name: cacheClang
       id: cacheClang
       uses: actions/cache@v2
@@ -54,17 +38,34 @@ jobs:
           ${{ github.workspace }}/${{ env.CLANG_VER }}
         key: ${{ runner.os }}/${{ env.CLANG_VER }}
 
+    - name: 获取时间
+      id: get_time
+      run: |
+        echo "actions_time=$(date)" >> $GITHUB_ENV
+
+    - name: 签出仓库
+      uses: actions/checkout@v3
+      with:
+        repository: ${{ github.event.inputs.AUTHOR }}/${{ github.event.inputs.CHECKOUT_REPO }}
+        ref: ${{ github.event.inputs.CHECKOUT_BRANCH }}
+        path: ${{ env.KERNEL_DIR }}
+
+    - name: 签出编译器
+      if: steps.cacheClang.outputs.cache-hit != 'true'
+      uses: actions/checkout@v3
+      with:
+        repository: kdrag0n/proton-clang
+        path: ${{ env.CLANG_VER }}
+
+    - name: 拉取模板
+      uses: actions/checkout@v3
+      with:
+        path: Anykernel
+
     - name: 准备编译环境
       run: |
         sudo apt update -y
         sudo apt install -y git wget unzip p7zip-full git
-
-    - name: 拉取编译器
-      if: steps.cacheClang.outputs.cache-hit != 'true'
-      run: |
-        wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip -q
-        unzip ./20210522.zip
-        chmod -R 777 ${{ github.workspace }}/${{ env.CLANG_VER }}
 
     - name: 编译中
       run: |
