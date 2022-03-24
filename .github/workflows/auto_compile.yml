@@ -109,5 +109,5 @@ jobs:
         curl -sL https://git.io/file-transfer | sh 
         ./transfer arp ${{ github.workspace }}/${{ env.KERNEL_DIR}}/out/arch/arm64/boot/Image.gz-dtb --silent
         echo "------------------------------"
-        ./transfer arp ${{ github.workspace }}/Anykernel/output.zip --silent
+        ./transfer arp ${{ github.workspace }}/Anykernel/Kernel_template.zip --silent
     
