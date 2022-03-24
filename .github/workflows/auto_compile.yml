@@ -17,7 +17,7 @@ on:
         default: 'dipper_defconfig'
 
 env:
-  CLANG_VER: '20210522-proton'
+  CLANG_VER: 'proton-clang-20210522'
   ARCHOSUB: 'arm64'
   KERNEL_DIR: 'kernel_source'
 jobs:
@@ -38,7 +38,7 @@ jobs:
       with:
         path: |
           ${{ github.workspace }}/${{ env.CLANG_VER }}
-        key: ${{ runner.os }}-${{ env.CLANG_VER }}/${{ env.CLANG_VER }}
+        key: ${{ runner.os }}-${{ env.CLANG_VER }}
 
     - name: 准备编译环境
       run: |
