@@ -100,9 +100,8 @@ jobs:
     - name: 打包内核
       run: |
         cd ${{ github.workspace }}/Anykernel
-        zip -o Kernel_template.zip
-        cp ${{ github.workspace }}/${{ env.KERNEL_DIR}}/out/arch/arm64/boot/Image.gz-dtb ${{ github.workspace }}/Anykernel/Kernel_template
-        zip -q -r output.zip ${{ github.workspace }}/Anykernel/Kernel_template
+        cp ${{ github.workspace }}/${{ env.KERNEL_DIR}}/out/arch/arm64/boot/Image.gz-dtb ${{ github.workspace }}/Anykernel/
+        zip -u Kernel_template.zip Image.gz-dtb
 
     - name: 上传到网盘
       run: |
