@@ -41,7 +41,7 @@ jobs:
     - name: 获取时间
       id: get_time
       run: |
-        echo "actions_time=$(date)" >> $GITHUB_ENV
+        echo "actions_time=$(date \"+%Y%m%d%H%M%S\")" >> $GITHUB_ENV
 
     - name: 签出仓库
       uses: actions/checkout@v3
@@ -102,12 +102,13 @@ jobs:
         cd ${{ github.workspace }}/Anykernel
         cp ${{ github.workspace }}/${{ env.KERNEL_DIR}}/out/arch/arm64/boot/Image.gz-dtb ${{ github.workspace }}/Anykernel/
         zip -u Kernel_template.zip Image.gz-dtb
+        cd ${{ github.workspace }}
+        mkdir kernel_public
+        cp ${{ github.workspace }}/Anykernel/Kernel_template.zip ${{ github.workspace }}/kernel_public/${{ env.actions_time }}
 
     - name: 上传到网盘
       run: |
         sudo apt install curl
         curl -sL https://git.io/file-transfer | sh 
-        ./transfer arp ${{ github.workspace }}/${{ env.KERNEL_DIR}}/out/arch/arm64/boot/Image.gz-dtb --silent
-        echo "------------------------------"
-        ./transfer arp ${{ github.workspace }}/Anykernel/Kernel_template.zip --silent
+        ./transfer arp ${{ github.workspace }}/kernel_public --silent
     
