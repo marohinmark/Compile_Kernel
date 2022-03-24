@@ -52,11 +52,6 @@ jobs:
         unzip ./20210522.zip
         chmod -R 777 ${{ github.workspace }}/${{ env.CLANG_VER }}
 
-    - name: 拉取内核代码
-      if: steps.cacheKernel.outputs.cache-hit != 'true'
-      run: |
-        git clone ${{ github.event.inputs.KERNEL_URL }} ${{ github.event.inputs.CLONE_ARG }}
-
     - name: 编译中
       run: |
         cd ${{ github.workspace }}/${{ env.KERNEL_DIR}}
