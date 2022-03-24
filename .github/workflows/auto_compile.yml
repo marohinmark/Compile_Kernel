@@ -11,10 +11,6 @@ on:
         description: 'KERNEL_DIR'
         required: true
         default: 'android_kernel_xiaomi_sdm845'
-      FRESH_CACHE:
-        description: 'FRESH_CACHE'
-        required: true
-        default: '2'
       CLONE_ARG:
         description: 'CLONE_ARGUMENT'
         required: false
@@ -44,39 +40,32 @@ jobs:
     name: Compile kernel
     runs-on: ubuntu-latest
     steps:
-    - name: cacheClang
+    - name: 获得缓存
       id: cacheClang
       uses: actions/cache@v2
       with:
         path: |
           ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}
         key: ${{ runner.os }}-${{ github.event.inputs.TOOLCHAIN_DIR }}/${{ env.CLANG_VER }}
-    - name: cacheKernel
-      id: cacheKernel
-      uses: actions/cache@v2
-      with:
-        path: |
-          ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
-        key: ${{ runner.os }}-${{ github.event.inputs.KERNEL_DIR }}-${{ github.event.inputs.FRESH_CACHE }}
 
-    - name: Ready Compile
+    - name: 准备编译环境
       run: |
         sudo apt update -y
         sudo apt install -y git wget unzip p7zip-full git
 
-    - name: Clone Clang
+    - name: 拉取编译器
       if: steps.cacheClang.outputs.cache-hit != 'true'
       run: |
         wget https://github.com/kdrag0n/proton-clang/archive/refs/tags/20210522.zip -q
         unzip ./20210522.zip
         chmod -R 777 ${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}
 
-    - name: Clone Kernel Code
+    - name: 拉取内核代码
       if: steps.cacheKernel.outputs.cache-hit != 'true'
       run: |
         git clone ${{ github.event.inputs.KERNEL_URL }} ${{ github.event.inputs.CLONE_ARG }}
 
-    - name: Compile Kernel
+    - name: 编译中
       run: |
         cd ${{ github.workspace }}/${{ github.event.inputs.KERNEL_DIR }}
         git pull 
@@ -107,7 +96,7 @@ jobs:
         CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ github.event.inputs.TOOLCHAIN_DIR }}/bin/arm-linux-gnueabi- \
         ${{ github.event.inputs.COMPILE_SET }}
     
-    - name: Upload to Cloud
+    - name: 上传到网盘
       run: |
         sudo apt install curl
         curl -sL https://git.io/file-transfer | sh 
