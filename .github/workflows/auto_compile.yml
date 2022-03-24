@@ -46,13 +46,13 @@ jobs:
       with:
         path: Anykernel
 
-    - name: 获得缓存
+    - name: cacheClang
       id: cacheClang
       uses: actions/cache@v2
       with:
         path: |
           ${{ github.workspace }}/${{ env.CLANG_VER }}
-        key: ${{ runner.os }}-${{ env.CLANG_VER }}
+        key: ${{ runner.os }}/${{ env.CLANG_VER }}
 
     - name: 准备编译环境
       run: |
