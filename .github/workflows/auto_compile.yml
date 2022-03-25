@@ -104,7 +104,7 @@ jobs:
         zip -u Kernel_template.zip Image.gz-dtb
         cd ${{ github.workspace }}
         mkdir kernel_public
-        cp ${{ github.workspace }}/Anykernel/Kernel_template.zip ${{ github.workspace }}/kernel_public/${{ env.actions_time }}
+        cp ${{ github.workspace }}/Anykernel/Kernel_template.zip ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
 
     - name: 上传到网盘
       run: |
