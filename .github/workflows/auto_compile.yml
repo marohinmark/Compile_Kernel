@@ -1,4 +1,4 @@
-name: CompileKernel
+name: "编译内核"
 
 on:
   workflow_dispatch:
@@ -107,7 +107,7 @@ jobs:
         cp ${{ github.workspace }}/Anykernel/Kernel_template.zip ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
     
     - name: 发布到Release
-    - uses: "marvinpinto/action-automatic-releases@latest"
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: true
