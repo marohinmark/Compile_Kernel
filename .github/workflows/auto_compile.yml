@@ -24,6 +24,7 @@ env:
   CLANG_VER: 'proton-clang'
   ARCHOSUB: 'arm64'
   KERNEL_DIR: 'kernel_source'
+  COMPILE_THREAD: '32' # $(nproc --all) cpu核心数
 
 jobs:
   kernel:
@@ -83,8 +84,8 @@ jobs:
         export PATH="${{ github.workspace }}/${{ env.CLANG_VER }}/bin:$PATH"
 
         make O=out ${{ github.event.inputs.USEDEFCONFIG }}
-        
-        make -j$(nproc --all) O=out \
+
+        make -j${{ env.COMPILE_THREAD }} O=out \
         AR=${{ github.workspace }}/${{ env.CLANG_VER }}/bin/llvm-ar \
         NM=${{ github.workspace }}/${{ env.CLANG_VER }}/bin/llvm-nm \
         OBJCOPY=${{ github.workspace }}/${{ env.CLANG_VER }}/bin/llvm-objcopy \
@@ -110,6 +111,8 @@ jobs:
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
         prerelease: true
+        title: Release ${{ github.event.inputs.AUTHOR }}/${{ github.event.inputs.CHECKOUT_REPO }}
         files: |
           ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
