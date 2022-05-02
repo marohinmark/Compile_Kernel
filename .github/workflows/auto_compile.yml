@@ -1,4 +1,4 @@
-name: "编译内核"
+name: CompileKernel
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ env:
   KERNEL_DIR: 'kernel_source'
 
 jobs:
-  compile:
+  kernel:
     name: 编译内核
     runs-on: ubuntu-latest
     steps:
