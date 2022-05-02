@@ -105,10 +105,11 @@ jobs:
         cd ${{ github.workspace }}
         mkdir kernel_public
         cp ${{ github.workspace }}/Anykernel/Kernel_template.zip ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
-
-    - name: 上传到网盘
-      run: |
-        sudo apt install curl
-        curl -sL https://git.io/file-transfer | sh 
-        ./transfer arp ${{ github.workspace }}/kernel_public --silent
     
+    - name: 发布到Release
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: true
+        files: |
+          ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
