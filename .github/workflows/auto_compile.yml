@@ -112,7 +112,7 @@ jobs:
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: "latest"
-        prerelease: true
-        title: Release ${{ github.event.inputs.AUTHOR }}/${{ github.event.inputs.CHECKOUT_REPO }}
+        prerelease: false
+        title: Release ${{ github.event.inputs.AUTHOR }}/${{ github.event.inputs.CHECKOUT_REPO }}-${{ env.actions_time }}
         files: |
           ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
