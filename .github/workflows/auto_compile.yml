@@ -19,6 +19,18 @@ on:
         description: 'USEDEFCONFIG'
         required: true
         default: 'dipper_defconfig'
+      USE_LANZOU:
+        description: 'USE_LANZOU'
+        required: true
+        default: '0'
+      LANZOU_COOKIE_YLOGIN:
+        description: 'LANZOU_COOKIE_YLOGIN'
+        required: false
+        default: ''
+      LANZOU_COOKIE_PHPDISK:
+        description: 'LANZOU_COOKIE_PHPDISKINFO'
+        required: false
+        default: ''
 
 env:
   CLANG_VER: 'proton-clang'
@@ -108,6 +120,7 @@ jobs:
         cp ${{ github.workspace }}/Anykernel/Kernel_template.zip ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
     
     - name: 发布到Release
+      if: github.event.inputs.USE_LANZOU == '0'
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
@@ -116,3 +129,12 @@ jobs:
         title: Release ${{ github.event.inputs.AUTHOR }}/${{ github.event.inputs.CHECKOUT_REPO }}-${{ env.actions_time }}
         files: |
           ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
+    
+    - name: 发布到蓝奏云
+      if: github.event.inputs.USE_LANZOU == '1'
+      run: |
+        sudo apt install python3 python3-pip
+        pip3 install lanzou-api
+        cd ${{ github.workspace }}/Anykernel
+        python3 lz_upload.py 
+
