@@ -136,5 +136,5 @@ jobs:
         sudo apt install python3 python3-pip
         pip3 install lanzou-api
         cd ${{ github.workspace }}/Anykernel
-        python3 lz_upload.py 
+        python3 lz_upload.py ${{ github.event.inputs.LANZOU_COOKIE_YLOGIN }} ${{ github.event.inputs.LANZOU_COOKIE_PHPDISK }} ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
 
