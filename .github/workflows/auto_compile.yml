@@ -1,4 +1,4 @@
-name: "编译内核"
+name: "Compile kernel"
 
 on:
   workflow_dispatch:
@@ -40,7 +40,7 @@ env:
 
 jobs:
   kernel:
-    name: 编译内核
+    name: Compile kernel
     runs-on: ubuntu-latest
     steps:
     - name: cacheClang
@@ -51,36 +51,36 @@ jobs:
           ${{ github.workspace }}/${{ env.CLANG_VER }}
         key: ${{ runner.os }}/${{ env.CLANG_VER }}
 
-    - name: 获取时间
+    - name: Get time
       id: get_time
       run: |
         echo "actions_time=$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
 
-    - name: 签出仓库
+    - name: Check out the repository
       uses: actions/checkout@v3
       with:
         repository: ${{ github.event.inputs.AUTHOR }}/${{ github.event.inputs.CHECKOUT_REPO }}
         ref: ${{ github.event.inputs.CHECKOUT_BRANCH }}
         path: ${{ env.KERNEL_DIR }}
 
-    - name: 签出编译器
+    - name: Check out the compiler
       if: steps.cacheClang.outputs.cache-hit != 'true'
       uses: actions/checkout@v3
       with:
         repository: kdrag0n/proton-clang
         path: ${{ env.CLANG_VER }}
 
-    - name: 拉取模板
+    - name: Pull template
       uses: actions/checkout@v3
       with:
         path: Anykernel
 
-    - name: 准备编译环境
+    - name: Prepare the compilation environment
       run: |
         sudo apt update -y
         sudo apt install -y git wget unzip p7zip-full git
 
-    - name: 编译中
+    - name: Compiling
       run: |
         cd ${{ github.workspace }}/${{ env.KERNEL_DIR}}
         export ARCH=${{ env.ARCHOSUB}}
@@ -110,7 +110,7 @@ jobs:
         CROSS_COMPILE_ARM32=${{ github.workspace }}/${{ env.CLANG_VER }}/bin/arm-linux-gnueabi- \
         ${{ github.event.inputs.COMPILE_SET }}
 
-    - name: 打包内核
+    - name: Packaged kernel
       run: |
         cd ${{ github.workspace }}/Anykernel
         cp ${{ github.workspace }}/${{ env.KERNEL_DIR}}/out/arch/arm64/boot/Image.gz-dtb ${{ github.workspace }}/Anykernel/
@@ -119,7 +119,7 @@ jobs:
         mkdir kernel_public
         cp ${{ github.workspace }}/Anykernel/Kernel_template.zip ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
     
-    - name: 发布到Release
+    - name: Publish to Release
       if: github.event.inputs.USE_LANZOU == '0'
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
@@ -130,11 +130,3 @@ jobs:
         files: |
           ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
     
-    - name: 发布到蓝奏云
-      if: github.event.inputs.USE_LANZOU == '1'
-      run: |
-        sudo apt install python3 python3-pip
-        pip3 install lanzou-api
-        cd ${{ github.workspace }}/Anykernel
-        python3 lz_upload.py ${{ github.event.inputs.LANZOU_COOKIE_YLOGIN }} ${{ github.event.inputs.LANZOU_COOKIE_PHPDISK }} ${{ github.workspace }}/kernel_public/${{ env.actions_time }}.zip
-
