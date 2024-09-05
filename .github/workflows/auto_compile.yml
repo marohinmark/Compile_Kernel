@@ -6,19 +6,19 @@ on:
       AUTHOR:
         description: 'AUTHOR'
         required: true
-        default: 'PPKunOfficial'   
+        default: 'Veynamer'   
       CHECKOUT_REPO:
         description: 'CHECKOUT_REPO'
         required: true
-        default: 'android_kernel_xiaomi_sdm845'
+        default: 'android_kernel_xiaomi_mt6765'
       CHECKOUT_BRANCH:
         description: 'CHECKOUT_BRANCH'
         required: true
-        default: 'rebase-s'
+        default: 'alps-0.6'
       USEDEFCONFIG:
         description: 'USEDEFCONFIG'
         required: true
-        default: 'dipper_defconfig'
+        default: 'cactus_defconfig'
       USE_LANZOU:
         description: 'USE_LANZOU'
         required: true
