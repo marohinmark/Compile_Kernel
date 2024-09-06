@@ -10,15 +10,15 @@ on:
       CHECKOUT_REPO:
         description: 'CHECKOUT_REPO'
         required: true
-        default: 'android_kernel_xiaomi_mt6765'
+        default: 'kernel_ums512_5.4'
       CHECKOUT_BRANCH:
         description: 'CHECKOUT_BRANCH'
         required: true
-        default: 'alps-0.6'
+        default: 'master'
       USEDEFCONFIG:
         description: 'USEDEFCONFIG'
         required: true
-        default: 'certus_defconfig'
+        default: 'unisoc_fuzz_ums512_defconfig'
 
 env:
   CLANG_VER: 'proton-clang'
