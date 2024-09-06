@@ -1,4 +1,4 @@
-name: "Compile kernel"
+name: "Compile kernel Unisoc"
 
 on:
   workflow_dispatch:
