@@ -1,6 +1,6 @@
 KERNEL_SOURCE=https://github.com/Veynamer/kernel_ums512_5.4.git
 KERNEL_SOURCE_BRANCH=master
-KERNEL_CONFIG=X6816D_defconfig
+KERNEL_CONFIG=X6816D_nomodules_defconfig
 KERNEL_IMAGE_NAME=Image
 ARCH=arm64
 
